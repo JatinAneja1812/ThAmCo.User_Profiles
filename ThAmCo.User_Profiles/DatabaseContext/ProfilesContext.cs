@@ -88,7 +88,7 @@ namespace ThAmCo.User_Profiles.DatabaseContext
                      Street = "Maple Street",
                      City = "MiddlesBrough",
                      State = "United Kingdoms",
-                     PostalCode = "TS14JU"
+                     PostalCode = "TS14JU",
                      UserAddedOnDate = DateTime.Now.AddDays(-20)
                  },
                  // Staff

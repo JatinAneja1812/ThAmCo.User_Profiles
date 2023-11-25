@@ -22,7 +22,7 @@ namespace ThAmCo.User_Profiles.Models
             set => _userAddedOnDate = value.ToUniversalTime();
         }
         public UserTypeEnum UserType { get; set; }
-        public string? LocationNumber { get; set; }
+        public string LocationNumber { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }

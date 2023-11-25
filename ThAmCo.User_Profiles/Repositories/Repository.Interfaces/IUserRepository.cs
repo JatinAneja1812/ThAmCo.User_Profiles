@@ -8,8 +8,7 @@ namespace ThAmCo.User_Profiles.Repositories.Repository.Interfaces
         public User GetUserByIdFromDatabase(string userId);
         public User GetUserByUsernameAndEmailFromDatabase(string username, string email);
         public int AddNewUserToDatabase(User userToAdd);
-        public bool UpdateUserToDatabase();
+        public int UpdateUserToDatabase(User userToUpdate);
         public int DeleteUserFromDatabase(User userToRemove);
-        public bool UpdateCustomerFundsToDatabase();
     }
 }

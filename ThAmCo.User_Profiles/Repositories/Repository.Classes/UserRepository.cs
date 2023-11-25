@@ -113,14 +113,24 @@ namespace ThAmCo.User_Profiles.Repositories.Repository.Classes
             }
         }
 
-        public bool UpdateCustomerFundsToDatabase()
+        public int UpdateUserToDatabase(User userToUpdate)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                _context.Users.Update(userToUpdate);
+                _context.ChangeTracker.DetectChanges();
+                // Save changes to the database
+                return _context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError(
+                    new EventId((int)LogEventIdEnum.UpdateFailed), 
+                    $"Failed to update user in the database. \nError occurred in UserRepository at UpdateUserToDatabase(...) with the following " +
+                    $"error message and stack trace.\n{ex.Message}\n{ex.StackTrace}\nInner exception: {(ex.InnerException != null ? ex.InnerException.Message + "\n" + ex.InnerException.StackTrace : "None")}");
 
-        public bool UpdateUserToDatabase()
-        {
-            throw new NotImplementedException();
+                return -1; // Indicates failure
+            }
         }
     }
 }

@@ -27,9 +27,9 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
             {
                 List<User> allCustomers = _userRepository.GetAllCustomersFromDatabase();
 
-                if (allCustomers == null)
+                if (allCustomers == null) // no user found
                 {
-                    return null;
+                    return new List<UserProfilesDTO>();
                 }
 
                 List<UserProfilesDTO> userProfilesDTOs = _mapper.Map<List<User>, List<UserProfilesDTO>>(allCustomers);
@@ -49,14 +49,14 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
         {
             try
             {
-                User exisingStaff = _userRepository.GetUserByUsernameAndEmailFromDatabase(username, email);
+                User existingStaff = _userRepository.GetUserByUsernameAndEmailFromDatabase(username, email);
 
-                if (exisingStaff == null)
+                if (existingStaff == null)
                 {
                     return null;
                 }
 
-                UserProfilesDTO staffDetails = _mapper.Map<User, UserProfilesDTO>(exisingStaff);
+                UserProfilesDTO staffDetails = _mapper.Map<User, UserProfilesDTO>(existingStaff);
 
                 return staffDetails;
             }
@@ -73,9 +73,9 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
         {
             try
             {
-                User existsingUser = _userRepository.GetUserByUsernameAndEmailFromDatabase(userDataToAdd.Username, userDataToAdd.Email);
+                User existingUser = _userRepository.GetUserByUsernameAndEmailFromDatabase(userDataToAdd.Username, userDataToAdd.Email);
 
-                if (existsingUser != null)
+                if (existingUser != null)
                 {
                     throw new UserExistsException();
                 }
@@ -87,11 +87,7 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
 
                 int didSave = _userRepository.AddNewUserToDatabase(newUser);
 
-                if (didSave == -1)
-                {
-                    return false;
-                }
-                return true;
+                return didSave > 0;
             }
             catch (Exception ex)
             {
@@ -104,7 +100,32 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
 
         public bool UpdateUser(UserProfilesDTO userDataToUpdate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                User existingUser = _userRepository.GetUserByIdFromDatabase(userDataToUpdate.UserId.ToString()) ?? throw new DataNotFoundException();
+                // Update user properties based on the provided DTO
+                existingUser.Username = userDataToUpdate.Username;
+                existingUser.Email = userDataToUpdate.Email;
+                existingUser.FirstName = userDataToUpdate.FirstName;
+                existingUser.LastName = userDataToUpdate.LastName;
+                existingUser.PhoneNumber = userDataToUpdate.PhoneNumber;
+                existingUser.LocationNumber = userDataToUpdate.LocationNumber;
+                existingUser.Street = userDataToUpdate.Street;
+                existingUser.City = userDataToUpdate.City;
+                existingUser.State = userDataToUpdate.State;
+                existingUser.PostalCode = userDataToUpdate.PostalCode;
+
+                int didUpdate = _userRepository.UpdateUserToDatabase(existingUser);
+
+                return didUpdate > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(new EventId((int)LogEventIdEnum.InsertFailed), $"Failed to add new customers to the database. \nError occured in User Service at UpdateUser(...) with following error message and stack trace." +
+                 $"{ex.Message}\n{ex.StackTrace}\nInner exception: {(ex.InnerException != null ? ex.InnerException.Message + "\n" + ex.InnerException.StackTrace : "None")}");
+
+                return false;
+            }
         }
 
         public bool DeleteUser(string userId)
@@ -115,24 +136,36 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
 
                 int didRemove = _userRepository.DeleteUserFromDatabase(existsingUser);
 
-                if (didRemove == -1)
-                {
-                    return false;
-                }
-                return true;
+                return didRemove > 0;
             }
             catch (Exception ex)
             {
-                _logger.LogError(new EventId((int)LogEventIdEnum.InsertFailed), $"Failed to add new customers to the database. \nError occured in User Service at AddNewCustomer(...) with following error message and stack trace." +
+                _logger.LogError(new EventId((int)LogEventIdEnum.InsertFailed), $"Failed to add new customers to the database. \nError occured in User Service at DeleteUser(...) with following error message and stack trace." +
                  $"{ex.Message}\n{ex.StackTrace}\nInner exception: {(ex.InnerException != null ? ex.InnerException.Message + "\n" + ex.InnerException.StackTrace : "None")}");
 
                 return false;
             }
         }
 
-        public bool UpdateCustomerFunds(string userId, double amount)
+        public bool UpdateCustomerFunds(CustomerFundsDTO updatedCustomerFunds)
         {
-            throw new NotImplementedException();
+            try
+            {
+                User existingUser = _userRepository.GetUserByIdFromDatabase(updatedCustomerFunds.UserId) ?? throw new DataNotFoundException();
+                // Update user properties based on the provided DTO
+                existingUser.AvailableFunds = updatedCustomerFunds.Amount;
+
+                int didUpdate = _userRepository.UpdateUserToDatabase(existingUser);
+
+                return didUpdate > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(new EventId((int)LogEventIdEnum.InsertFailed), $"Failed to update customers funds to the database. \nError occured in User Service at UpdateCustomerFunds(...) with following error message and stack trace." +
+                 $"{ex.Message}\n{ex.StackTrace}\nInner exception: {(ex.InnerException != null ? ex.InnerException.Message + "\n" + ex.InnerException.StackTrace : "None")}");
+
+                return false;
+            }
         }
     }
 }

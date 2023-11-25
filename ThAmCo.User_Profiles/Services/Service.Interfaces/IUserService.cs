@@ -15,12 +15,12 @@ namespace ThAmCo.User_Profiles.Services.Service.Interfaces
         public bool AddNewUser(UserProfilesDTO userDataToAdd);
 
         // Update customer details
-        public bool UpdateUser( UserProfilesDTO userDataToUpdate);
+        public bool UpdateUser(UserProfilesDTO userDataToUpdate);
 
         // Delete customer by ID
         public bool DeleteUser(string userId);
 
         // Udpate customer available funds
-        public bool UpdateCustomerFunds(string userId, double amount);
+        public bool UpdateCustomerFunds(CustomerFundsDTO updatedCustomerFunds);
     }
 }
