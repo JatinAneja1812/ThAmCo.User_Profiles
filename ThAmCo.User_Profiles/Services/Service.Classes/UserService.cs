@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Exceptions;
-using ThAmCo.User_Profiles.Controllers;
 using ThAmCo.User_Profiles.DTOs;
 using ThAmCo.User_Profiles.Enums;
 using ThAmCo.User_Profiles.Models;
@@ -12,13 +11,46 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly ILogger<UserProfilesController> _logger;
+        private readonly ILogger<UserService> _logger;
         private readonly IMapper _mapper;
-        public UserService(IUserRepository UserRepository, ILogger<UserProfilesController> Logger, IMapper Mapper)
+        public UserService(IUserRepository UserRepository, ILogger<UserService> Logger, IMapper Mapper)
         {
             _userRepository = UserRepository;
             _logger = Logger;
             _mapper = Mapper;
+        }
+
+        public bool AddNewUser(UserProfilesDTO userDataToAdd)
+        {
+            try
+            {
+                User existingUser = _userRepository.GetUserByUsernameAndEmailFromDatabase(userDataToAdd.Username, userDataToAdd.Email);
+
+                if (existingUser != null)
+                {
+                    throw new UserExistsException();
+                }
+
+                User newUser = _mapper.Map<UserProfilesDTO, User>(userDataToAdd);
+                newUser.UserId = Guid.NewGuid();
+                newUser.UserAddedOnDate = DateTime.Now;
+                newUser.AvailableFunds = 0.00;
+
+                int didSave = _userRepository.AddNewUserToDatabase(newUser);
+
+                return didSave > 0;
+            }
+            catch (UserExistsException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(new EventId((int)LogEventIdEnum.InsertFailed), $"Failed to add new customers to the database. \nError occured in User Service at AddNewCustomer(...) with following error message and stack trace." +
+                 $"{ex.Message}\n{ex.StackTrace}\nInner exception: {(ex.InnerException != null ? ex.InnerException.Message + "\n" + ex.InnerException.StackTrace : "None")}");
+
+                return false;
+            }
         }
 
         public List<UserProfilesDTO> GetAllCustomser()
@@ -41,7 +73,7 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
                 _logger.LogError(new EventId((int)LogEventIdEnum.GetFailed), $"Failed to retrieve customers from the database. \nError occured in User Service at GetAllCustomser(...) with following error message and stack trace." +
                  $"{ex.Message}\n{ex.StackTrace}\nInner exception: {(ex.InnerException != null ? ex.InnerException.Message + "\n" + ex.InnerException.StackTrace : "None")}");
 
-                return null;
+                throw;
             }
         }
 
@@ -69,35 +101,6 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
             }
         }
 
-        public bool AddNewUser(UserProfilesDTO userDataToAdd)
-        {
-            try
-            {
-                User existingUser = _userRepository.GetUserByUsernameAndEmailFromDatabase(userDataToAdd.Username, userDataToAdd.Email);
-
-                if (existingUser != null)
-                {
-                    throw new UserExistsException();
-                }
-
-                User newUser = _mapper.Map<UserProfilesDTO, User>(userDataToAdd);
-                newUser.UserId = Guid.NewGuid();
-                newUser.UserAddedOnDate = DateTime.Now;
-                newUser.AvailableFunds = 0.00;
-
-                int didSave = _userRepository.AddNewUserToDatabase(newUser);
-
-                return didSave > 0;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(new EventId((int)LogEventIdEnum.InsertFailed), $"Failed to add new customers to the database. \nError occured in User Service at AddNewCustomer(...) with following error message and stack trace." +
-                 $"{ex.Message}\n{ex.StackTrace}\nInner exception: {(ex.InnerException != null ? ex.InnerException.Message + "\n" + ex.InnerException.StackTrace : "None")}");
-
-                return false;
-            }
-        }
-
         public bool UpdateUser(UserProfilesDTO userDataToUpdate)
         {
             try
@@ -119,6 +122,10 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
 
                 return didUpdate > 0;
             }
+            catch (DataNotFoundException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 _logger.LogError(new EventId((int)LogEventIdEnum.InsertFailed), $"Failed to add new customers to the database. \nError occured in User Service at UpdateUser(...) with following error message and stack trace." +
@@ -137,6 +144,10 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
                 int didRemove = _userRepository.DeleteUserFromDatabase(existsingUser);
 
                 return didRemove > 0;
+            }
+            catch (DataNotFoundException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -158,6 +169,10 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
                 int didUpdate = _userRepository.UpdateUserToDatabase(existingUser);
 
                 return didUpdate > 0;
+            }
+            catch (DataNotFoundException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
