@@ -6,6 +6,7 @@ using ThAmCo.User_Profiles.Automapper;
 using ThAmCo.User_Profiles.Models;
 using ThAmCo.User_Profiles.Repositories.Repository.Interfaces;
 using ThAmCo.User_Profiles.Services.Service.Classes;
+using ThAmCo.User_Profiles.Utility;
 using Xunit;
 
 namespace UserProfilesService.Tests
@@ -14,18 +15,20 @@ namespace UserProfilesService.Tests
     {
         private readonly Mock<IUserRepository> _userRepository;
         private readonly Mock<ILogger<UserService>> _logger;
+        private readonly Mock<IGuidUtility> _guidUtility;
         private readonly IMapper _mapper;
         private readonly UserService _userService;
         public DeleteUserTest()
         {
             _userRepository = new Mock<IUserRepository>();
             _logger = new Mock<ILogger<UserService>>();
+            _guidUtility = new Mock<IGuidUtility>();
             _mapper = new Mapper(new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<UserDataMappingProfile>();
             }));
 
-            _userService = new UserService(_userRepository.Object, _logger.Object, _mapper);
+            _userService = new UserService(_userRepository.Object, _guidUtility.Object, _logger.Object, _mapper);
         }
 
         [Fact]
@@ -33,7 +36,7 @@ namespace UserProfilesService.Tests
         {
             // Arrange
             var userId = Guid.NewGuid().ToString();
-            var existingUser = new User { UserId = Guid.Parse(userId) };
+            var existingUser = new User { UserId = userId };
 
             _userRepository.Setup(repo => repo.GetUserByIdFromDatabase(userId)).Returns(existingUser);
             _userRepository.Setup(repo => repo.DeleteUserFromDatabase(existingUser)).Returns(1); // Assuming 1 means successful deletion
@@ -50,7 +53,7 @@ namespace UserProfilesService.Tests
         {
             // Arrange
             var userId = Guid.NewGuid().ToString();
-            _userRepository.Setup(repo => repo.GetUserByIdFromDatabase(userId)).Returns(new User { UserId = Guid.Parse(userId) });
+            _userRepository.Setup(repo => repo.GetUserByIdFromDatabase(userId)).Returns(new User { UserId = userId });
             _userRepository.Setup(repo => repo.DeleteUserFromDatabase(It.IsAny<User>())).Throws(new Exception("Some unexpected exception"));
 
             // Act

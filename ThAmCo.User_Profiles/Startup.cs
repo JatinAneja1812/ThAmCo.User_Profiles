@@ -7,6 +7,7 @@ using ThAmCo.User_Profiles.Repositories.Repository.Interfaces;
 using ThAmCo.User_Profiles.Services.Service.Classes;
 using ThAmCo.User_Profiles.Services.Service.Interfaces;
 using AutoMapper;
+using ThAmCo.User_Profiles.Utility;
 
 namespace ThAmCo.User_Profiles
 {
@@ -62,11 +63,11 @@ namespace ThAmCo.User_Profiles
             // Add controllers
             services.AddControllers();
 
-            services.AddAutoMapper(typeof(UserDataMappingProfile));
-
+            services.AddAutoMapper(cfg => cfg.AddProfile<UserDataMappingProfile>());
             // Add services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddTransient<IGuidUtility, GuidUtility>();
 
             // Add API endpoint exploration and Swagger
             services.AddEndpointsApiExplorer();

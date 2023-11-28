@@ -6,6 +6,7 @@ using ThAmCo.User_Profiles.Enums;
 using ThAmCo.User_Profiles.Models;
 using ThAmCo.User_Profiles.Repositories.Repository.Interfaces;
 using ThAmCo.User_Profiles.Services.Service.Classes;
+using ThAmCo.User_Profiles.Utility;
 using Xunit;
 
 namespace UserProfilesService.Tests
@@ -14,19 +15,20 @@ namespace UserProfilesService.Tests
     {
         private readonly Mock<IUserRepository> _userRepository;
         private readonly Mock<ILogger<UserService>> _logger;
+        private readonly Mock<IGuidUtility> _guidUtility;
         private readonly IMapper _mapper;
         private readonly UserService _userService;
-
         public GetAllCustomersTest()
         {
             _userRepository = new Mock<IUserRepository>();
             _logger = new Mock<ILogger<UserService>>();
+            _guidUtility = new Mock<IGuidUtility>();
             _mapper = new Mapper(new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<UserDataMappingProfile>();
             }));
 
-            _userService = new UserService(_userRepository.Object, _logger.Object, _mapper);
+            _userService = new UserService(_userRepository.Object, _guidUtility.Object, _logger.Object, _mapper);
         }
 
         [Fact]
@@ -51,7 +53,7 @@ namespace UserProfilesService.Tests
             {
                 new User
                 {
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.NewGuid().ToString(),
                     Username = "john_doe",
                     Email = "john.doe@example.com",
                     FirstName = "John",
@@ -68,7 +70,7 @@ namespace UserProfilesService.Tests
                 },
                 new User
                 {
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.NewGuid().ToString(),
                     Username = "jane_smith",
                     Email = "jane.smith@example.com",
                     FirstName = "Jane",

@@ -7,6 +7,7 @@ using ThAmCo.User_Profiles.DTOs;
 using ThAmCo.User_Profiles.Models;
 using ThAmCo.User_Profiles.Repositories.Repository.Interfaces;
 using ThAmCo.User_Profiles.Services.Service.Classes;
+using ThAmCo.User_Profiles.Utility;
 using Xunit;
 
 namespace UserProfilesService.Tests
@@ -15,18 +16,20 @@ namespace UserProfilesService.Tests
     {
         private readonly Mock<IUserRepository> _userRepository;
         private readonly Mock<ILogger<UserService>> _logger;
+        private readonly Mock<IGuidUtility> _guidUtility;
         private readonly IMapper _mapper;
         private readonly UserService _userService;
         public UpdateCustomerFundsTest()
         {
             _userRepository = new Mock<IUserRepository>();
             _logger = new Mock<ILogger<UserService>>();
+            _guidUtility = new Mock<IGuidUtility>();
             _mapper = new Mapper(new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<UserDataMappingProfile>();
             }));
 
-            _userService = new UserService(_userRepository.Object, _logger.Object, _mapper);
+            _userService = new UserService(_userRepository.Object, _guidUtility.Object, _logger.Object, _mapper);
         }
 
         [Fact]
@@ -42,7 +45,7 @@ namespace UserProfilesService.Tests
 
             var existingUser = new User
             {
-                UserId = Guid.Parse(userId),
+                UserId = userId,
                 AvailableFunds = 100.00 // Set the initial available funds
             };
 
@@ -71,7 +74,7 @@ namespace UserProfilesService.Tests
 
             var existingUser = new User
             {
-                UserId = Guid.Parse(userId),
+                UserId = userId,
                 AvailableFunds = 100.00 // Set the initial available funds
             };
 

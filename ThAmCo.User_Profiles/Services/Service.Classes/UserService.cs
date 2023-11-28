@@ -5,17 +5,20 @@ using ThAmCo.User_Profiles.Enums;
 using ThAmCo.User_Profiles.Models;
 using ThAmCo.User_Profiles.Repositories.Repository.Interfaces;
 using ThAmCo.User_Profiles.Services.Service.Interfaces;
+using ThAmCo.User_Profiles.Utility;
 
 namespace ThAmCo.User_Profiles.Services.Service.Classes
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IGuidUtility _guidUtility;
         private readonly ILogger<UserService> _logger;
         private readonly IMapper _mapper;
-        public UserService(IUserRepository UserRepository, ILogger<UserService> Logger, IMapper Mapper)
+        public UserService(IUserRepository UserRepository, IGuidUtility GuidUtility , ILogger<UserService> Logger, IMapper Mapper)
         {
             _userRepository = UserRepository;
+            _guidUtility = GuidUtility;
             _logger = Logger;
             _mapper = Mapper;
         }
@@ -32,7 +35,7 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
                 }
 
                 User newUser = _mapper.Map<UserProfilesDTO, User>(userDataToAdd);
-                newUser.UserId = Guid.NewGuid();
+                newUser.UserId = _guidUtility.GenerateShortGuid(Guid.NewGuid());
                 newUser.UserAddedOnDate = DateTime.Now;
                 newUser.AvailableFunds = 0.00;
 

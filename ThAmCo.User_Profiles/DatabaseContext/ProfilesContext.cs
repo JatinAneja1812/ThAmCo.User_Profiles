@@ -1,11 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ThAmCo.User_Profiles.Enums;
 using ThAmCo.User_Profiles.Models;
+using ThAmCo.User_Profiles.Utility;
 
 namespace ThAmCo.User_Profiles.DatabaseContext
 {
     public class ProfilesContext : DbContext
     {
+        private readonly GuidUtility _guidUtility;
+
         public ProfilesContext() : base()
         {
         }
@@ -25,7 +28,7 @@ namespace ThAmCo.User_Profiles.DatabaseContext
                  // Customers
                  new User
                  {
-                     UserId = Guid.NewGuid(),
+                     UserId = new GuidUtility().GenerateShortGuid(Guid.NewGuid()),
                      Username = "john_doe",
                      Email = "john.doe@example.com",
                      FirstName = "John",
@@ -42,7 +45,7 @@ namespace ThAmCo.User_Profiles.DatabaseContext
                  },
                  new User
                  {
-                     UserId = Guid.NewGuid(),
+                     UserId = new GuidUtility().GenerateShortGuid(Guid.NewGuid()),
                      Username = "jane_smith",
                      Email = "jane.smith@example.com",
                      FirstName = "Jane",
@@ -59,7 +62,7 @@ namespace ThAmCo.User_Profiles.DatabaseContext
                  },
                  new User
                  {
-                     UserId = Guid.NewGuid(),
+                     UserId = new GuidUtility().GenerateShortGuid(Guid.NewGuid()),
                      Username = "bob_jones",
                      Email = "bob.jones@example.com",
                      FirstName = "Bob",
@@ -76,7 +79,7 @@ namespace ThAmCo.User_Profiles.DatabaseContext
                  },
                  new User
                  {
-                     UserId = Guid.NewGuid(),
+                     UserId = new GuidUtility().GenerateShortGuid(Guid.NewGuid()),
                      Username = "alice_smith",
                      Email = "alice.smith@example.com",
                      FirstName = "Alice",
@@ -94,7 +97,7 @@ namespace ThAmCo.User_Profiles.DatabaseContext
                  // Staff
                  new User
                  {
-                     UserId = Guid.NewGuid(),
+                     UserId = new GuidUtility().GenerateShortGuid(Guid.NewGuid()),
                      Username = "JatinAneja01",
                      Email = "jatinaneja2000@outlook.com",
                      FirstName = "Jatin",
@@ -111,7 +114,7 @@ namespace ThAmCo.User_Profiles.DatabaseContext
                  },
                  new User
                  {
-                     UserId = Guid.NewGuid(),
+                     UserId = new GuidUtility().GenerateShortGuid(Guid.NewGuid()),
                      Username = "sara_jones",
                      Email = "sara.jones@example.com",
                      FirstName = "Sara",

@@ -22,7 +22,7 @@ namespace ThAmCo.User_Profiles.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("GetAllUsers")]
+        [Route("GetAllCustomers")]
         public ActionResult<List<UserProfilesDTO>> GetAllCustomser()
         {
             try
