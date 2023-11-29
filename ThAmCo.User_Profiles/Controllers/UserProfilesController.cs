@@ -170,7 +170,7 @@ namespace ThAmCo.User_Profiles.Controllers
         [Authorize]
         [HttpPatch]
         [Route("UpdateUserFunds")]
-        public ActionResult<bool> UpdateExistingUserFunds([FromBody] CustomerFundsDTO customerFundsDTO)
+        public ActionResult<bool> UpdateExistingUserFunds(CustomerFundsDTO customerFundsDTO)
         {
             try
             {
