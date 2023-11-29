@@ -97,7 +97,7 @@ namespace ThAmCo.User_Profiles.Repositories.Repository.Classes
         {
             try
             {
-                User userData = _context.Users.Where(c => c.UserId.ToString() == userId).First();
+                User userData = _context.Users.Where(c => c.UserId == userId).First();
 
                 return userData;
             }
