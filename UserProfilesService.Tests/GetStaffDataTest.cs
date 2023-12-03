@@ -40,7 +40,7 @@ namespace UserProfilesService.Tests
             _userRepository.Setup(repo => repo.GetUserByUsernameAndEmailFromDatabase(username, email)).Returns((User)null);
 
             // Act
-            var result = _userService.GetStaffData(username, email);
+            var result = _userService.GetStaffData(email);
 
             // Assert
             Assert.Null(result);
@@ -50,7 +50,6 @@ namespace UserProfilesService.Tests
         public void GetStaffData_Should_Return_Staff_Details_If_Found()
         {
             // Arrange
-            string username = "existing_user";
             string email = "existing_email@example.com";
             var existingStaff = new User 
             { 
@@ -70,10 +69,10 @@ namespace UserProfilesService.Tests
                 PostalCode = "TS64KU"
             };
 
-            _userRepository.Setup(repo => repo.GetUserByUsernameAndEmailFromDatabase(username, email)).Returns(existingStaff);
+            _userRepository.Setup(repo => repo.GetUserByEmailFromDatabase(email)).Returns(existingStaff);
 
             // Act
-            var result = _userService.GetStaffData(username, email);
+            var result = _userService.GetStaffData(email);
 
             // Assert
             Assert.NotNull(result);
@@ -85,10 +84,10 @@ namespace UserProfilesService.Tests
             // Arrange
             string username = "error_user";
             string email = "error_email@example.com";
-            _userRepository.Setup(repo => repo.GetUserByUsernameAndEmailFromDatabase(username, email)).Throws(new Exception("Simulated error"));
+            _userRepository.Setup(repo => repo.GetUserByEmailFromDatabase(email)).Throws(new Exception("Simulated error"));
 
             // Act
-            var result = _userService.GetStaffData(username, email);
+            var result = _userService.GetStaffData(email);
 
             // Assert
             Assert.Null(result);

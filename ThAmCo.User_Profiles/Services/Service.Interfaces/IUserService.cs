@@ -9,7 +9,7 @@ namespace ThAmCo.User_Profiles.Services.Service.Interfaces
         List<UserProfilesDTO> GetAllCustomser();
         
         // Retrieve current logged in staff
-        UserProfilesDTO GetStaffData(string username, string email);
+        UserProfilesDTO GetStaffData(string email);
 
         // Added a new customer
         public bool AddNewUser(UserProfilesDTO userDataToAdd);

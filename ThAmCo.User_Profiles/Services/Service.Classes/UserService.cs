@@ -80,11 +80,11 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
             }
         }
 
-        public UserProfilesDTO GetStaffData(string username, string email)
+        public UserProfilesDTO GetStaffData(string email)
         {
             try
             {
-                User existingStaff = _userRepository.GetUserByUsernameAndEmailFromDatabase(username, email);
+                User existingStaff = _userRepository.GetUserByEmailFromDatabase(email);
 
                 if (existingStaff == null)
                 {

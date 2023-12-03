@@ -49,12 +49,12 @@ namespace ThAmCo.User_Profiles.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("GetStaff")]
-        public ActionResult<UserProfilesDTO> GetStaffData([FromHeader] string Username, [FromHeader] string Email)
+        [Route("GetStaffDetails")]
+        public ActionResult<UserProfilesDTO> GetStaffData([FromHeader] string Email)
         {
             try
             {
-                UserProfilesDTO result = _userService.GetStaffData(Username, Email);
+                UserProfilesDTO result = _userService.GetStaffData(Email);
 
                 if (result == null)
                 {

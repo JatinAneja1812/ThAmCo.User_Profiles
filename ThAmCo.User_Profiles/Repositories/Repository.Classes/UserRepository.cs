@@ -73,6 +73,26 @@ namespace ThAmCo.User_Profiles.Repositories.Repository.Classes
             }
         }
 
+        public User GetUserByEmailFromDatabase(string email)
+        {
+            try
+            {
+                User staffData = _context.Users.Where(c => c.Email == email).First();
+
+                return staffData;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(
+                   new EventId((int)LogEventIdEnum.GetFailed),
+                   $"Failed to retrive user with and email: {email} from the database. Error occurred in User Repository at GetUserByEmailFromDatabase(...) with the following message and stack trace: " +
+                   $"{ex.Message}\n{ex.StackTrace}\nInner exception: {(ex.InnerException != null ? ex.InnerException.Message + "\n" + ex.InnerException.StackTrace : "None")}"
+                  );
+
+                return null;
+            }
+        }
+
         public User GetUserByUsernameAndEmailFromDatabase(string username, string email)
         {
             try
