@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThAmCo.User_Profiles.Applic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserProfilesFileLogger", "UserProfilesFileLogger\UserProfilesFileLogger.csproj", "{192623C3-AC91-4918-94EC-6F84072C8EF4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThAmCo.User_Profiles.XUnitTests", "ThAmCo.User_Profiles.XUnitTests", "{E4F0B397-9EF6-4369-AC99-500CBBBCD467}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThAmCo.User_Profiles.UnitTests", "ThAmCo.User_Profiles.UnitTests", "{E4F0B397-9EF6-4369-AC99-500CBBBCD467}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThAmCo.UserProfiles.Exceptions", "ThAmCo.UserProfiles.Exceptions", "{DEC03B80-C20A-4E7C-ACFB-03E806048FDA}"
 EndProject
