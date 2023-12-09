@@ -77,7 +77,7 @@ namespace ThAmCo.User_Profiles.Controllers
         [Authorize]
         [HttpPost]
         [Route("AddUser")]
-        public ActionResult<bool> AddNewUser([FromBody] UserProfilesDTO userProfileDTO)
+        public ActionResult<bool> AddNewUser(UserProfilesDTO userProfileDTO)
         {
             try
             {
@@ -139,7 +139,7 @@ namespace ThAmCo.User_Profiles.Controllers
         [Authorize]
         [HttpPatch]
         [Route("UpdateUser")]
-        public ActionResult<bool> UpdateExistingUser([FromBody] UserProfilesDTO userProfileDTO)
+        public ActionResult<bool> UpdateExistingUser(UserProfilesDTO userProfileDTO)
         {
             try
             {
