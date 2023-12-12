@@ -7,6 +7,27 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    runs-on: windows-latest
+    needs: build
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: true
+
+      - name: Run tests
+        run: |
+          cd ${{env.DOTNET_ROOT}}/myapp
+          dotnet test --configuration Release
+          
   build:
     runs-on: windows-latest
 
@@ -30,27 +51,6 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
-
-  test:
-    runs-on: windows-latest
-    needs: build
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: .net-app
-
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
-
-      - name: Run tests
-        run: |
-          cd ${{env.DOTNET_ROOT}}/myapp
-          dotnet test --configuration Release
 
   deploy:
     runs-on: windows-latest
