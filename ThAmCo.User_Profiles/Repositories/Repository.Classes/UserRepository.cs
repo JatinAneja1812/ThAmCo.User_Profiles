@@ -138,8 +138,6 @@ namespace ThAmCo.User_Profiles.Repositories.Repository.Classes
             try
             {
                 _context.Users.Update(userToUpdate);
-                _context.ChangeTracker.DetectChanges();
-                // Save changes to the database
                 return _context.SaveChanges();
             }
             catch (DbUpdateException ex)

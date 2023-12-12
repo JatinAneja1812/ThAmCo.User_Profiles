@@ -83,7 +83,7 @@ namespace ThAmCo.User_Profiles.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "5dbe6825ca05",
+                            UserId = "324e27ec87f9",
                             AvailableFunds = 433.31999999999999,
                             City = "Cityville",
                             Email = "john.doe@example.com",
@@ -94,13 +94,13 @@ namespace ThAmCo.User_Profiles.Migrations
                             PostalCode = "TS64KU",
                             State = "United Kingdom",
                             Street = "Main Street",
-                            UserAddedOnDate = new DateTime(2023, 12, 1, 12, 2, 38, 623, DateTimeKind.Utc).AddTicks(1466),
+                            UserAddedOnDate = new DateTime(2023, 12, 7, 11, 6, 23, 110, DateTimeKind.Utc).AddTicks(5273),
                             UserType = 0,
                             Username = "john_doe"
                         },
                         new
                         {
-                            UserId = "bd5a24acca8d",
+                            UserId = "283903b3bfc3",
                             AvailableFunds = 2433.1199999999999,
                             City = "Townsville",
                             Email = "jane.smith@example.com",
@@ -111,13 +111,13 @@ namespace ThAmCo.User_Profiles.Migrations
                             PostalCode = "TS64KU",
                             State = "United Kingdom",
                             Street = "Broadway",
-                            UserAddedOnDate = new DateTime(2023, 11, 26, 12, 2, 38, 623, DateTimeKind.Utc).AddTicks(1656),
+                            UserAddedOnDate = new DateTime(2023, 12, 2, 11, 6, 23, 110, DateTimeKind.Utc).AddTicks(5362),
                             UserType = 0,
                             Username = "jane_smith"
                         },
                         new
                         {
-                            UserId = "9a710c54c513",
+                            UserId = "2b603ab48c4a",
                             AvailableFunds = 4433.1199999999999,
                             City = "Villageville",
                             Email = "bob.jones@example.com",
@@ -128,13 +128,13 @@ namespace ThAmCo.User_Profiles.Migrations
                             PostalCode = "TS54JU",
                             State = "United Kingdom",
                             Street = "Oak Street",
-                            UserAddedOnDate = new DateTime(2023, 11, 21, 12, 2, 38, 623, DateTimeKind.Utc).AddTicks(1692),
+                            UserAddedOnDate = new DateTime(2023, 11, 27, 11, 6, 23, 110, DateTimeKind.Utc).AddTicks(5393),
                             UserType = 0,
                             Username = "bob_jones"
                         },
                         new
                         {
-                            UserId = "44269370dadf",
+                            UserId = "79becad34f5b",
                             AvailableFunds = 577.72000000000003,
                             City = "MiddlesBrough",
                             Email = "alice.smith@example.com",
@@ -145,13 +145,13 @@ namespace ThAmCo.User_Profiles.Migrations
                             PostalCode = "TS14JU",
                             State = "United Kingdom",
                             Street = "Maple Street",
-                            UserAddedOnDate = new DateTime(2023, 11, 16, 12, 2, 38, 623, DateTimeKind.Utc).AddTicks(1726),
+                            UserAddedOnDate = new DateTime(2023, 11, 22, 11, 6, 23, 110, DateTimeKind.Utc).AddTicks(5424),
                             UserType = 0,
                             Username = "alice_smith"
                         },
                         new
                         {
-                            UserId = "9130088f400d",
+                            UserId = "a86a33bc4245",
                             AvailableFunds = 5077.7200000000003,
                             City = "MiddlesBrough",
                             Email = "jatinaneja2000@outlook.com",
@@ -162,13 +162,13 @@ namespace ThAmCo.User_Profiles.Migrations
                             PostalCode = "TS14JE",
                             State = "United Kingdom",
                             Street = "Pine Street",
-                            UserAddedOnDate = new DateTime(2023, 11, 11, 12, 2, 38, 623, DateTimeKind.Utc).AddTicks(1758),
+                            UserAddedOnDate = new DateTime(2023, 11, 17, 11, 6, 23, 110, DateTimeKind.Utc).AddTicks(5452),
                             UserType = 1,
                             Username = "JatinAneja01"
                         },
                         new
                         {
-                            UserId = "b463247f69cc",
+                            UserId = "055cbca5ec06",
                             AvailableFunds = 2077.7199999999998,
                             City = "MiddlesBrough",
                             Email = "sara.jones@example.com",
@@ -179,7 +179,7 @@ namespace ThAmCo.User_Profiles.Migrations
                             PostalCode = "TS24SE",
                             State = "United Kingdom",
                             Street = "Cedar Street",
-                            UserAddedOnDate = new DateTime(2023, 11, 6, 12, 2, 38, 623, DateTimeKind.Utc).AddTicks(1788),
+                            UserAddedOnDate = new DateTime(2023, 11, 12, 11, 6, 23, 110, DateTimeKind.Utc).AddTicks(5525),
                             UserType = 1,
                             Username = "sara_jones"
                         });
