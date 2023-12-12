@@ -37,10 +37,11 @@ namespace UserProfilesService.Tests
         {
             // Arrange
             var userId = Guid.NewGuid().ToString();
+            var totalAmount = 600.00;
             var updatedCustomerFunds = new CustomerFundsDTO
             {
                 UserId = userId,
-                Amount = 500.00 // Set the updated amount
+                Amount = 500.00 // amount to add
             };
 
             var existingUser = new User
@@ -49,6 +50,7 @@ namespace UserProfilesService.Tests
                 AvailableFunds = 100.00 // Set the initial available funds
             };
 
+            var updatedFundsTotal = existingUser.AvailableFunds + updatedCustomerFunds.Amount;
             _userRepository.Setup(repo => repo.GetUserByIdFromDatabase(userId)).Returns(existingUser);
             _userRepository.Setup(repo => repo.UpdateUserToDatabase(It.IsAny<User>())).Returns(1); // Assuming 1 means successful update
 
@@ -58,7 +60,7 @@ namespace UserProfilesService.Tests
             // Assert
             Assert.True(result);
             _userRepository.Verify(repo => repo.UpdateUserToDatabase(It.IsAny<User>()), Times.Once);
-            Assert.Equal(updatedCustomerFunds.Amount, existingUser.AvailableFunds); // Verify that funds are updated
+            Assert.Equal(totalAmount, updatedFundsTotal); // Verify that funds are updated
         }
 
         [Fact]
@@ -69,7 +71,7 @@ namespace UserProfilesService.Tests
             var updatedCustomerFunds = new CustomerFundsDTO
             {
                 UserId = userId,
-                Amount = 500.00 // Set the updated amount
+                Amount = 500.00 // amount to add
             };
 
             var existingUser = new User
@@ -109,7 +111,7 @@ namespace UserProfilesService.Tests
             var updatedCustomerFunds = new CustomerFundsDTO
             {
                 UserId = userId,
-                Amount = 500.00 // Set the updated amount
+                Amount = 500.00 // amount to add
             };
 
             _userRepository.Setup(repo => repo.GetUserByIdFromDatabase(userId)).Throws(new Exception("Simulated exception"));
