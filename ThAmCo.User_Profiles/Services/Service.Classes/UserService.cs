@@ -167,7 +167,7 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
             {
                 User existingUser = _userRepository.GetUserByIdFromDatabase(updatedCustomerFunds.UserId) ?? throw new DataNotFoundException();
                 // Update user properties based on the provided DTO
-                existingUser.AvailableFunds = updatedCustomerFunds.Amount;
+                existingUser.AvailableFunds = existingUser.AvailableFunds + updatedCustomerFunds.Amount;
 
                 int didUpdate = _userRepository.UpdateUserToDatabase(existingUser);
 
