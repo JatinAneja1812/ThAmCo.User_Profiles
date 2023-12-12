@@ -22,5 +22,6 @@ namespace ThAmCo.User_Profiles.Services.Service.Interfaces
 
         // Udpate customer available funds
         public bool UpdateCustomerFunds(CustomerFundsDTO updatedCustomerFunds);
+        public bool DirectAlterCustomerFunds(CustomerFundsDTO updatedCustomerFunds);
     }
 }

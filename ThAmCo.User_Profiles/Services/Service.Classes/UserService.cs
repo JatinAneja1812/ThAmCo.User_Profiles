@@ -185,5 +185,30 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
                 return false;
             }
         }
+
+        public bool DirectAlterCustomerFunds(CustomerFundsDTO updatedCustomerFunds)
+        {
+            try
+            {
+                User existingUser = _userRepository.GetUserByIdFromDatabase(updatedCustomerFunds.UserId) ?? throw new DataNotFoundException();
+                // Update user properties based on the provided DTO
+                existingUser.AvailableFunds =  updatedCustomerFunds.Amount;
+
+                int didUpdate = _userRepository.UpdateUserToDatabase(existingUser);
+
+                return didUpdate > 0;
+            }
+            catch (DataNotFoundException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(new EventId((int)LogEventIdEnum.InsertFailed), $"Failed to update customers funds to the database. \nError occured in User Service at UpdateCustomerFunds(...) with following error message and stack trace." +
+                 $"{ex.Message}\n{ex.StackTrace}\nInner exception: {(ex.InnerException != null ? ex.InnerException.Message + "\n" + ex.InnerException.StackTrace : "None")}");
+
+                return false;
+            }
+        }
     }
 }

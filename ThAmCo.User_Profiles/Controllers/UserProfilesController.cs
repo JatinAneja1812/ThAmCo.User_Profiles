@@ -197,5 +197,36 @@ namespace ThAmCo.User_Profiles.Controllers
                 return StatusCode(500, "Server error. An unknown error occurred on the server..");
             }
         }
+
+        [Authorize]
+        [HttpPatch]
+        [Route("AlterFunds")]
+        public ActionResult<bool> ChangeUsersFunds(CustomerFundsDTO customerFundsDTO)
+        {
+            try
+            {
+                bool result = _userService.DirectAlterCustomerFunds(customerFundsDTO);
+
+                if (!result)
+                {
+                    return StatusCode(500,
+                        "Failed to update user funds to the database. If this error presists contact administrator.");
+                }
+
+                return Ok(result);
+            }
+            catch (DataNotFoundException)
+            {
+                return StatusCode(400, "User selected to update does not exists in the database.Try to refresh your browser.If this error presists contact administrator.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(
+                 new EventId((int)LogEventIdEnum.UnknownError),
+                 $"Unexpected exception was caught in UserProfilesController at ChangeUsersFunds() .\nException:\n{ex.Message}\nInner exception:\n{ex.InnerException}\nStack trace:\n{ex.StackTrace}");
+
+                return StatusCode(500, "Server error. An unknown error occurred on the server..");
+            }
+        }
     }
 }
