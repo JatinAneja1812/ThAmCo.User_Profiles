@@ -154,7 +154,7 @@ namespace ThAmCo.User_Profiles.Services.Service.Classes
             }
             catch (Exception ex)
             {
-                _logger.LogError(new EventId((int)LogEventIdEnum.InsertFailed), $"Failed to add new customers to the database. \nError occured in User Service at DeleteUser(...) with following error message and stack trace." +
+                _logger.LogError(new EventId((int)LogEventIdEnum.InsertFailed), $"Failed to delete existing customers from the database. \nError occured in User Service at DeleteUser(...) with following error message and stack trace." +
                  $"{ex.Message}\n{ex.StackTrace}\nInner exception: {(ex.InnerException != null ? ex.InnerException.Message + "\n" + ex.InnerException.StackTrace : "None")}");
 
                 return false;
