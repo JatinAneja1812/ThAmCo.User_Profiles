@@ -1,4 +1,4 @@
-name: Build, test, and deploy ASP.Net Core app to Azure Web App - ThAmCo-User-Profiles-WebAPI
+name: Test, Build and Deploy ASP.Net Core app to Azure Web App - ThAmCo-User-Profiles-WebAPI
 
 on:
   push:
@@ -9,13 +9,9 @@ on:
 jobs:
   test:
     runs-on: windows-latest
-    needs: build
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: .net-app
+      - uses: actions/checkout@v4
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
@@ -23,13 +19,15 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
 
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+
       - name: Run tests
-        run: |
-          cd ${{env.DOTNET_ROOT}}/myapp
-          dotnet test --configuration Release
-          
+        run: dotnet test --configuration Release
+
   build:
     runs-on: windows-latest
+    needs: test
 
     steps:
       - uses: actions/checkout@v4
@@ -54,7 +52,7 @@ jobs:
 
   deploy:
     runs-on: windows-latest
-    needs: test
+    needs: build
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
