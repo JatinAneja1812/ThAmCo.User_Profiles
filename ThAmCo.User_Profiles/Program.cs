@@ -27,6 +27,7 @@ namespace ThAmCo.User_Profiles
                 {
                     // clear default logging providers
                     logging.ClearProviders();
+                    logging.AddAzureWebAppDiagnostics();
 
                     // Create log file directory if it doesn't exist
                     var logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
