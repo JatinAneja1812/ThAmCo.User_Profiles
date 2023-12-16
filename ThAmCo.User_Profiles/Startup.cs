@@ -51,14 +51,15 @@ namespace ThAmCo.User_Profiles
 
 
             // Configure the database context
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            var connectionString = configuration.GetConnectionString("ConnectionString");
+            var connectionString = _configuration.GetConnectionString("ProfilesConnectionString");
             services.AddDbContext<ProfilesContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(connectionString, sqlServerOptionsAction: sqlOptions =>
+                sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(1),
+                    errorNumbersToAdd: null
+                )
+            ));
 
             // Add controllers
             services.AddControllers();
