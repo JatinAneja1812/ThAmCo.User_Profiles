@@ -32,7 +32,7 @@ namespace ThAmCo.User_Profiles.Controllers
                 if (result == null)
                 {
                     return StatusCode(500,
-                        "Failed to retrieve all customers details from the database. If this error presists contact administrator");
+                        "Failed to retrieve all customers details from the database.");
                 }
 
                 return Ok(result);
