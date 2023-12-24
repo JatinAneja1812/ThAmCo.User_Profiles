@@ -23,7 +23,7 @@ namespace ThAmCo.User_Profiles.DatabaseContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("UserProfiles");
+            // modelBuilder.HasDefaultSchema("UserProfiles");  // Required when deployed in Azure
             // Seed fake user data
             modelBuilder.Entity<User>().HasData(
                  // Customers
