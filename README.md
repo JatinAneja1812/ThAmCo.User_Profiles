@@ -46,7 +46,7 @@ Before you can run the ThAmCo User Profiles WebAPI project in Visual Studio 2022
 4. Make a new branch from master.
 5. Right click on ThAmCo.User_Profiles and make it as default startup project ( Click on set as startup project button in the menu).
 6. Clean the project. Click build(On top of IDE) -> Clean Solution.
-7. Click on ThAmCo.Order_Managment.WebAPI on top navigation bar or either click on "Play" button to run the project.
+7. Click on ThAmCo.User_Profiles on top navigation bar or either click on "Play" button to run the project.
 
 If there is error connecting to your local database make sure you have installed correct version of SQL Server and SQL Server Managment Studio is connected. 
 Also in SQL Server Managment Studio : Database Engine name is : Localhost\\SQLExpress.
