@@ -1,4 +1,4 @@
-# ThAmCo Users WebAPI
+# ThAmCo User Profiles WebAPI
 
 Welcome to the ThAmCo Users WebAPI! This API is designed to manage user profiles for both customers and staff within the ThAmCo e-commerce system.
 
@@ -22,10 +22,10 @@ Welcome to the ThAmCo Users WebAPI! This API is designed to manage user profiles
 - **User Analytics Dashboard:** Develop a user analytics dashboard for administrators to gain insights into user engagement, trends, and system usage.
 
 ## Getting Started
-Follow these steps to set up and run the ThAmCo Orders Management WebAPI on your local machine.
+Follow these steps to set up and run the ThAmCo User Profiles WebAPI on your local machine.
 
 ### Prerequisites
-Before you can run the ThAmCo Orders Management WebAPI project in Visual Studio 2022, ensure that you have the following prerequisites installed on your development environment:
+Before you can run the ThAmCo User Profiles WebAPI project in Visual Studio 2022, ensure that you have the following prerequisites installed on your development environment:
 
 1. **Visual Studio 2022:** 
    - You can download the latest version of Visual Studio 2022 from the [official Visual Studio website](https://visualstudio.microsoft.com/downloads/).
